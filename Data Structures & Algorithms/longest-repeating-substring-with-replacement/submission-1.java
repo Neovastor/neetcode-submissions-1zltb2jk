@@ -1,0 +1,26 @@
+class Solution {
+
+    public int characterReplacement(String s, int k) {
+        Map<Character, Integer> map = new HashMap<>();
+        int left = 0;
+        int right = 0;
+        int result = 0;
+        int maxRepeated = 0;
+        int window = 0;
+        while (right < s.length()){
+
+            map.put(s.charAt(right), map.getOrDefault(s.charAt(right), 0) + 1);
+            maxRepeated = Math.max(maxRepeated, map.get(s.charAt(right)));
+            window = right + 1 - left;
+            while (window - maxRepeated > k ){
+                map.put(s.charAt(left), map.get(s.charAt(left)) - 1);
+
+                left++;
+                window = right + 1 - left;
+            }
+            result = Math.max(result, window);
+            right++;
+        }
+        return result;
+    }
+}
